@@ -29,7 +29,7 @@ public class Canvas
     {
         if(canvasSingleton == null) {
             canvasSingleton = new Canvas("BlueJ Picture Demo", 500, 300, 
-                                         Color.white);
+                Color.white);
         }
         canvasSingleton.setVisible(true);
         return canvasSingleton;
@@ -44,7 +44,7 @@ public class Canvas
     private Image canvasImage;
     private List<Object> objects;
     private HashMap<Object, ShapeDescription> shapes;
-    
+
     /**
      * Create a Canvas.
      * @param title    title to appear in Canvas Frame
@@ -81,6 +81,8 @@ public class Canvas
             Dimension size = canvas.getSize();
             canvasImage = canvas.createImage(size.width, size.height);
             graphic = (Graphics2D)canvasImage.getGraphics();
+            graphic.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
             graphic.setColor(backgroundColor);
             graphic.fillRect(0, 0, size.width, size.height);
             graphic.setColor(Color.black);
@@ -94,9 +96,9 @@ public class Canvas
      * @param  color            the color of the shape
      * @param  shape            the shape object to be drawn on the canvas
      */
-     // Note: this is a slightly backwards way of maintaining the shape
-     // objects. It is carefully designed to keep the visible shape interfaces
-     // in this project clean and simple for educational purposes.
+    // Note: this is a slightly backwards way of maintaining the shape
+    // objects. It is carefully designed to keep the visible shape interfaces
+    // in this project clean and simple for educational purposes.
     public void draw(Object referenceObject, String color, Shape shape)
     {
         objects.remove(referenceObject);   // just in case it was already there
@@ -104,7 +106,7 @@ public class Canvas
         shapes.put(referenceObject, new ShapeDescription(shape, color));
         redraw();
     }
- 
+
     /**
      * Erase a given shape's from the screen.
      * @param  referenceObject  the shape object to be erased 
@@ -177,7 +179,7 @@ public class Canvas
         }
         canvas.repaint();
     }
-       
+
     /**
      * Erase the whole canvas. (Does not repaint.)
      */
@@ -189,7 +191,6 @@ public class Canvas
         graphic.fill(new Rectangle(0, 0, size.width, size.height));
         graphic.setColor(original);
     }
-
 
     /************************************************************************
      * Inner class CanvasPane - the actual canvas component contained in the
@@ -203,7 +204,7 @@ public class Canvas
             g.drawImage(canvasImage, 0, 0, null);
         }
     }
-    
+
     /************************************************************************
      * Inner class CanvasPane - the actual canvas component contained in the
      * Canvas frame. This is essentially a JPanel with added capability to
